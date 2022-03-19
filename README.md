@@ -21,12 +21,14 @@ We use PRoot to be able to run any Linux distro on any Linux system without rein
 Some image files are bootstrapped manually, namely Debian-based distros (Ubuntu, Debian, Kali, Parrot, and Blackbox), as opposed to being downloaded from other sources.
 RootFS images are available [here](https://files.rb9.xyz/prootify/rootfs/), but if you need to build these manually, it's quite simple:
 ```bash
-# Install dependencies
+# Install dependencies first!
 sudo apt install wget qemu-user-static debian-archive-keyring debootstrap
 # Build all images
 wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-# Or build a specific image (in this example, backbox amd64)
-wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-scripts/backbox.sh | sudo bash -s -- amd64 backbox-amd64
+# Build all images but Parrot
+BUILD_INCLUDE_PARROT=false wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
+# Build all Parrot Images
+BUILD_INCLUDE=(parrot) wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
 ```
 
 If you get this error while building Parrot:

@@ -23,7 +23,7 @@ function check_dependencies () {
 check_dependencies wget whiptail proot
 
 is_termux=no
-if [ -x "/data/data/com.termux/files/usr/bin/termux-fix-shebang" ]
+if [ -x "/data/data/com.termux/files/usr/bin/termux-fix-shebang" ];
 then
 	is_termux=yes
 fi
@@ -55,7 +55,7 @@ action=$(whiptail --backtitle PRootify \
 exit_if_cancelled
 
 # Get Distro
-if [ $arch == "i386" ]
+if [ $arch == "i386" ];
 then
 # i386 distro list
 distro=$(whiptail --backtitle PRootify \
