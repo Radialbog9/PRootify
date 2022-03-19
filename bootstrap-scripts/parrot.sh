@@ -3,11 +3,9 @@
 #Bootstrap the system
 rm -rf $2
 mkdir $2
-if [ "$1" = "i386" ] || [ "$1" = "amd64" ] ; then
-  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $2 http://mirrors.ocf.berkeley.edu/parrot
-else
-  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $2 http://mirrors.ocf.berkeley.edu/parrot
-fi
+
+debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static --extra-suites=parrot-updates rolling $2 http://mirrors.ocf.berkeley.edu/parrot
+
 
 #Reduce size
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \

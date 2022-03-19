@@ -20,7 +20,7 @@ function check_dependencies () {
 }
 
 # Check dependencies
-check_dependencies dpkg wget whiptail proot
+check_dependencies wget whiptail proot
 
 is_termux=no
 if [ -x "/data/data/com.termux/files/usr/bin/termux-fix-shebang" ]

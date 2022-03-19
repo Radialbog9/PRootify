@@ -3,11 +3,9 @@
 #Bootstrap the system
 rm -rf $2
 mkdir $2
-if [ "$1" = "i386" ] || [ "$1" = "amd64" ] ; then
-  debootstrap --arch=$1 --variant=minbase --include=busybox,systemd,libsystemd0,wget,ca-certificates,busybox-static buster $2 http://deb.debian.org/debian
-else
-  qemu-debootstrap --arch=$1 --variant=minbase --include=busybox,systemd,libsystemd0,wget,ca-certificates,busybox-static buster $2 http://deb.debian.org/debian
-fi
+
+debootstrap --arch=$1 --variant=minbase --include=busybox,systemd,libsystemd0,wget,ca-certificates,busybox-static buster $2 http://deb.debian.org/debian
+
 
 #Reduce size
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \

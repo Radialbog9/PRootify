@@ -3,11 +3,9 @@
 #Bootstrap the system
 rm -rf $2
 mkdir $2
-if [ "$1" = "i386" ] || [ "$1" = "amd64" ] ; then
-  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static,gnupg kali-rolling $2 http://http.kali.org/kali
-else
-  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static,gnupg kali-rolling $2 http://http.kali.org/kali
-fi
+
+debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static,gnupg kali-rolling $2 http://http.kali.org/kali
+
 
 #Reduce size
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
