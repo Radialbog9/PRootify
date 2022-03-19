@@ -2,7 +2,7 @@
 # PRootify                       #
 # by Radialbog9                  #
 # License: GNU GPL3              #
-# File: prootify.sh version 1.0  #
+# File: prootify.sh              #
 # ############################## #
 
 function exit_if_cancelled () {
@@ -61,12 +61,11 @@ then
 distro=$(whiptail --backtitle PRootify \
 	--menu "Select Distro" 15 40 7 \
 	alpine "Alpine" \
-	arch "Arch Linux" \
 	backbox "BackBox" \
 	centos "CentOS" \
 	debian "Debian" \
 	kali "Kali" \
-	nethunter "Kali Nethunter" \
+	nethunter "Kali Nethunter Full" \
 	parrot "Parrot" \
 	ubuntu "Ubuntu" \
 	void "Void" \
@@ -77,13 +76,12 @@ else
 distro=$(whiptail --backtitle PRootify \
 	--menu "Select Distro" 15 40 7 \
 	alpine "Alpine" \
-	arch "Arch Linux" \
 	backbox "BackBox" \
 	centos "CentOS" \
 	debian "Debian" \
 	fedora "Fedora" \
 	kali "Kali" \
-	nethunter "Nethunter" \
+	nethunter "Kali Nethunter Full" \
 	parrot "Parrot" \
 	ubuntu "Ubuntu" \
 	void "Void" \
