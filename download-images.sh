@@ -44,7 +44,7 @@ wget -O rootfs/opensuse-tumbleweed-armhf.tar.xz https://raw.githubusercontent.co
 wget -O rootfs/opensuse-tumbleweed-arm64.tar.xz https://raw.githubusercontent.com/EXALAB/Anlinux-Resources/master/Rootfs/openSUSE/Tumbleweed/arm64/openSUSE-Tumbleweed-rootfs-arm64.tar.xz
 
 # Nethunter
-wget -O rootfs/nethunter-amd64.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-amd64.tar.xz
-wget -O rootfs/nethunter-i386.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-i386.tar.xz
-wget -O rootfs/nethunter-armhf.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-armhf.tar.xz
-wget -O rootfs/nethunter-arm64.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-arm64.tar.xz
+wget -O rootfs/nethunter-amd64.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-amd64-full.tar.xz
+wget -O rootfs/nethunter-i386.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-i386-full.tar.xz
+wget -O rootfs/nethunter-armhf.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-armhf-full.tar.xz
+wget -O rootfs/nethunter-arm64.tar.xz https://build.nethunter.com/kalifs/kalifs-latest/kalifs-arm64-full.tar.xz
