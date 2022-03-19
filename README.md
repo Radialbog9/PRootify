@@ -28,7 +28,9 @@ wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-
 # Build all images but Parrot
 BUILD_INCLUDE_PARROT=false wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
 # Build all Parrot Images
-BUILD_INCLUDE=(parrot) wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
+BUILD_INCLUDE="parrot" wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
+# Build amd64 Parrot image
+BUILD_INCLUDE="parrot:amd64" wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
 ```
 
 If you get this error while building Parrot:

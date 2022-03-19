@@ -40,6 +40,8 @@ if [ $(echo ${build_distros[@]} | grep -ow "kali" | wc -w) ]; then build_distros
 if [ $(echo ${build_distros[@]} | grep -ow "parrot" | wc -w) ]; then build_distros+=("parrot:arm64" "parrot:armhf" "parrot:amd64"  "parrot:i386"); fi
 if [ $(echo ${build_distros[@]} | grep -ow "ubuntu" | wc -w) ]; then build_distros+=("ubuntu:arm64" "ubuntu:armhf" "ubuntu:amd64"  "ubuntu:i386"); fi
 
+echo ${build_distros[@]}
+exit
 
 backbox_url=https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-scripts/backbox.sh
 debian_url=https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-scripts/debian.sh
