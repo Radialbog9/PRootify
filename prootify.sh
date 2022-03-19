@@ -28,8 +28,6 @@ then
 	is_termux=yes
 fi
 
-whiptail --backtitle PRootify --msgbox "Running on Termux: $is_termux" 15 40
-
 # Get action
 action=$(whiptail --backtitle PRootify \
 	--menu "Select Action" 15 40 5 \
