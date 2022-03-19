@@ -28,7 +28,7 @@ then
 	is_termux=yes
 fi
 
-echo $is_termux
+whiptail --backtitle PRootify --msgbox "Running on Termux: $is_termux"
 
 # Get action
 action=$(whiptail --backtitle PRootify \
