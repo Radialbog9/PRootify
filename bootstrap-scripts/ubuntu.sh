@@ -4,9 +4,9 @@
 rm -rf $2
 mkdir $2
 if [ "$1" = "i386" ] || [ "$1" = "amd64" ] ; then
-  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static focal $1 http://archive.ubuntu.com/ubuntu
+  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static focal $2 http://archive.ubuntu.com/ubuntu
 else  
-  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static focal $1 http://ports.ubuntu.com/ubuntu-ports
+  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static focal $2 http://ports.ubuntu.com/ubuntu-ports
 fi
 
 #Reduce size

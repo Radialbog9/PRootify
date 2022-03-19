@@ -4,9 +4,9 @@
 rm -rf $2
 mkdir $2
 if [ "$1" = "i386" ] || [ "$1" = "amd64" ] ; then
-  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $1 http://mirrors.ocf.berkeley.edu/parrot
+  debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $2 http://mirrors.ocf.berkeley.edu/parrot
 else
-  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $1 http://mirrors.ocf.berkeley.edu/parrot
+  qemu-debootstrap --arch=$1 --variant=minbase --include=systemd,libsystemd0,wget,ca-certificates,busybox-static rolling $2 http://mirrors.ocf.berkeley.edu/parrot
 fi
 
 #Reduce size
