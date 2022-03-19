@@ -36,10 +36,10 @@ then
 fi
 
 if [ $(echo ${build_distros[@]} | grep -ow "backbox" | wc -w) == 1 ]; then build_distros+=("backbox:arm64" "backbox:armhf" "backbox:amd64"  "backbox:i386"); fi
-if [ $(echo ${build_distros[@]} | grep -ow "debian" | wc -w) == 1]; then build_distros+=("debian:arm64" "debian:armhf" "debian:amd64"  "debian:i386"); fi
-if [ $(echo ${build_distros[@]} | grep -ow "kali" | wc -w) == 1]; then build_distros+=("kali:arm64" "kali:armhf" "kali:amd64"  "kali:i386"); fi
-if [ $(echo ${build_distros[@]} | grep -ow "parrot" | wc -w) == 1]; then build_distros+=("parrot:arm64" "parrot:armhf" "parrot:amd64"  "parrot:i386"); fi
-if [ $(echo ${build_distros[@]} | grep -ow "ubuntu" | wc -w) == 1]; then build_distros+=("ubuntu:arm64" "ubuntu:armhf" "ubuntu:amd64"  "ubuntu:i386"); fi
+if [ $(echo ${build_distros[@]} | grep -ow "debian" | wc -w) == 1 ]; then build_distros+=("debian:arm64" "debian:armhf" "debian:amd64"  "debian:i386"); fi
+if [ $(echo ${build_distros[@]} | grep -ow "kali" | wc -w) == 1 ]; then build_distros+=("kali:arm64" "kali:armhf" "kali:amd64"  "kali:i386"); fi
+if [ $(echo ${build_distros[@]} | grep -ow "parrot" | wc -w) == 1 ]; then build_distros+=("parrot:arm64" "parrot:armhf" "parrot:amd64"  "parrot:i386"); fi
+if [ $(echo ${build_distros[@]} | grep -ow "ubuntu" | wc -w) == 1 ]; then build_distros+=("ubuntu:arm64" "ubuntu:armhf" "ubuntu:amd64"  "ubuntu:i386"); fi
 
 echo ${build_distros[@]}
 exit
