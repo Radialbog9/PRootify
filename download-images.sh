@@ -1,4 +1,5 @@
-mkdir rootfs
+mkdir -p rootfs
+rm -r rootfs/*
 
 # Alpine
 wget -O rootfs/alpine-mini-amd64.tar.gz http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-minirootfs-3.15.1-x86_64.tar.gz
