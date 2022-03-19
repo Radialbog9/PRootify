@@ -114,6 +114,7 @@ do
             bootstrapdist ubuntu i386 $ubuntu_url $temp_dir
             ;;
         *)
+            echo "Skipping $distro as not recognised"
             ;;
     esac
 done
