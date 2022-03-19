@@ -23,7 +23,7 @@ function check_dependencies () {
 check_dependencies dpkg wget proot
 
 is_termux=no
-if [ pwd == "/data/data/com.termux/files/usr/bin/termux-fix-shebang" ]
+if [ -x "/data/data/com.termux/files/usr/bin/termux-fix-shebang" ]
 then
 	is_termux=yes
 fi
