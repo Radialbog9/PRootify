@@ -97,8 +97,8 @@ else
 		parrot "Parrot" \
 		ubuntu "Ubuntu" \
 		void "Void" \
-		opensuseleap "openSUSE Leap" \
-		opensusetumbleweed "openSUSE Tumbleweed" \
+		opensuse-leap "openSUSE Leap" \
+		opensuse-tumbleweed "openSUSE Tumbleweed" \
 		3>&1 1>&2 2>&3)
 	exit_if_cancelled
 fi
@@ -106,7 +106,17 @@ fi
 case $distro in
 	alpine)
 		archive_format=gz
+		dist_path="/bin:/usr/bin:/sbin:/usr/sbin"
+		dist_shell="/bin/sh --login"
 		;;
+	backbox)
+		archive_format=xz
+		dist_path="/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games"
+		dist_shell="/bin/bash --login"
+	centos)
+		archive_format=xz
+		dist_path="/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games"
+		dist_shell="/bin/bash --login"
 	*)
 		archive_format=xz
 		;;
@@ -127,7 +137,28 @@ case $action in
 			3>&1 1>&2 2>&3)
 		exit_if_cancelled
 		# Start installation
+		echo "Downloading Archive..."
 		wget -O $dir/$distro-rootfs.tar.$archive_format "https://files.rb9.xyz/prootify/rootfs/$distro-rootfs-$arch.tar.$archive_format"
+		currentdir=`pwd`
+		mkdir -p $dir/$distro-fs
+		# goto folder where rootfs is
+		cd "$dir/$distro-fs"
+		echo "Decompressing RootFS..."
+		if [ "$is_termux" == "yes" ]
+		then
+			proot --link2symlink tar -xJf $dir/$distro-rootfs.tar.$archive_format
+		else
+			proot tar -xJf $dir/$distro-rootfs.tar.$archive_format
+		fi
+		rm -rfd dev/
+		echo "Setting up networking..."
+		echo "127.0.0.1 localhost" > etc/hosts
+    	echo "nameserver 1.1.1.1" > etc/resolv.conf
+    	echo "nameserver 1.0.0.2" >> etc/resolv.conf
+		# cd back to where we were before
+		cd "$currentdir"
+		mkdir -p $dir/$distro-binds
+		# todo do something
 		;;
 	*)
 		whiptail --backtitle PRootify --msgbox "This feature hasn't been implemented yet." 15 40
