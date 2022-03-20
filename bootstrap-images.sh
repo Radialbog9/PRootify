@@ -9,6 +9,7 @@
 function bootstrapdist () {
     # wget -qO <url> | bash -s -- <arch> <dir>/<name>/<arch>
     wget -qO - $3 | bash -s -- $2 $4/$1/$2
+    # echo wget -qO - $3 bash -s -- $2 $4/$1/$2
 }
 
 
@@ -50,8 +51,9 @@ ubuntu_url=https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-
 
 mkdir -p $temp_dir/{backbox,debian,kali,parrot,ubuntu}
 
-for distro in "${build_distros[@]}"
+for (( c=0; c<${#build_distros[@]}; c++ ))
 do
+    distro="${build_distros[c]}"
     case "$distro" in
         backbox:arm64)
             bootstrapdist backbox arm64 $backbox_url $temp_dir
@@ -114,7 +116,6 @@ do
             bootstrapdist ubuntu i386 $ubuntu_url $temp_dir
             ;;
         *)
-            echo "Skipping $distro as not recognised"
             ;;
     esac
 done
