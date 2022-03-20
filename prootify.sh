@@ -30,7 +30,19 @@ fi
 
 
 # Get architecture
-case `dpkg --print-architecture` in
+use_dpkg=true
+command -v dpkg >/dev/null 2>&1 || { use_dpkg=false; }
+
+if [ $use_dpkg == "true" ]
+then
+	# use dpkg if present
+	arch_reported=`dpkg --print-architecture`
+else
+	# use arch as a fallback
+	arch_reported=`arch`
+fi
+
+case "$arch_reported" in
 	aarch64 | arm64)
 		arch="arm64" ;;
 	arm | armhf)
@@ -57,40 +69,48 @@ exit_if_cancelled
 # Get Distro
 if [ $arch == "i386" ];
 then
-# i386 distro list
-distro=$(whiptail --backtitle PRootify \
-	--menu "Select Distro" 15 40 7 \
-	alpine "Alpine" \
-	backbox "BackBox" \
-	centos "CentOS" \
-	debian "Debian" \
-	kali "Kali" \
-	nethunter "Kali Nethunter Full" \
-	parrot "Parrot" \
-	ubuntu "Ubuntu" \
-	void "Void" \
-	3>&1 1>&2 2>&3)
-exit_if_cancelled
+	# i386 distro list
+	distro=$(whiptail --backtitle PRootify \
+		--menu "Select Distro" 15 40 7 \
+		alpine "Alpine" \
+		backbox "BackBox" \
+		centos "CentOS" \
+		debian "Debian" \
+		kali "Kali" \
+		nethunter "Kali Nethunter Full" \
+		parrot "Parrot" \
+		ubuntu "Ubuntu" \
+		void "Void" \
+		3>&1 1>&2 2>&3)
+	exit_if_cancelled
 else
-# arm64, armhf, and amd64 distro list
-distro=$(whiptail --backtitle PRootify \
-	--menu "Select Distro" 15 40 7 \
-	alpine "Alpine" \
-	backbox "BackBox" \
-	centos "CentOS" \
-	debian "Debian" \
-	fedora "Fedora" \
-	kali "Kali" \
-	nethunter "Kali Nethunter Full" \
-	parrot "Parrot" \
-	ubuntu "Ubuntu" \
-	void "Void" \
-	opensuseleap "openSUSE Leap" \
-	opensusetumbleweed "openSUSE Tumbleweed" \
-	3>&1 1>&2 2>&3)
-exit_if_cancelled
+	# arm64, armhf, and amd64 distro list
+	distro=$(whiptail --backtitle PRootify \
+		--menu "Select Distro" 15 40 7 \
+		alpine "Alpine" \
+		backbox "BackBox" \
+		centos "CentOS" \
+		debian "Debian" \
+		fedora "Fedora" \
+		kali "Kali" \
+		nethunter "Kali Nethunter Full" \
+		parrot "Parrot" \
+		ubuntu "Ubuntu" \
+		void "Void" \
+		opensuseleap "openSUSE Leap" \
+		opensusetumbleweed "openSUSE Tumbleweed" \
+		3>&1 1>&2 2>&3)
+	exit_if_cancelled
 fi
 
+case $distro in
+	alpine)
+		archive_format=gz
+		;;
+	*)
+		archive_format=xz
+		;;
+esac
 
 # Steps
 case $action in
@@ -102,6 +122,12 @@ case $action in
 			3>&1 1>&2 2>&3)
 		exit_if_cancelled
 		echo "Installation directory: $dir"
+		confirm=$(whiptail --backtitle PRootify \
+			--yesno "Are you sure you want to install $distro into $dir/$distro-fs and $dir/$distro-binds with launch script $dir/start-$distro.sh?" 15 40 \
+			3>&1 1>&2 2>&3)
+		exit_if_cancelled
+		# Start installation
+		wget -O $dir/$distro-rootfs.tar.$archive_format "https://files.rb9.xyz/prootify/rootfs/$distro-rootfs-$arch.tar.$archive_format"
 		;;
 	*)
 		whiptail --backtitle PRootify --msgbox "This feature hasn't been implemented yet." 15 40
