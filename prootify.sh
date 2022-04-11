@@ -113,7 +113,7 @@ then
 fi
 
 case $distro in
-	alpine)
+	alpine-mini)
 		archive_format=gz
 		dist_path=\\/bin:\\/usr\\/bin:\\/sbin:\\/usr\\/sbin
 		dist_shell="\\/bin\\/sh --login"
