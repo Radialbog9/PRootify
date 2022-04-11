@@ -7,7 +7,7 @@
 
 host=https://files.rb9.xyz/prootify/
 
-cat > /tmp/prootify_mirror_filelist.txt <<- EOM
+cat > /tmp/prootify_mirror_rootfslist.txt <<- EOM
 alpine-mini-rootfs-amd64.tar.gz
 alpine-mini-rootfs-arm64.tar.gz
 alpine-mini-rootfs-armhf.tar.gz
@@ -55,9 +55,12 @@ void-rootfs-armhf.tar.xz
 void-rootfs-i386.tar.xz
 EOM
 
-for file in `cat /tmp/prootify_mirror_filelist.txt`; 
+mkdir -p rootfs
+rm -rf rootfs/*
+
+for file in `cat /tmp/prootify_mirror_rootfslist.txt`; 
 do
-    wget $host/$file
+    wget -O rootfs/$file $host/rootfs/$file
 done
 
-rm /tmp/prootify_mirror_filelist.txt
+rm /tmp/prootify_mirror_rootfslist.txt
