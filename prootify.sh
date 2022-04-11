@@ -169,7 +169,7 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r $folder"
+command+=" -r *DIST*-fs/"
 if [ -n "\$(ls -A *DIST*-binds)" ]; then
 	for f in *DIST*-binds/* ;do
 		. \$f
@@ -202,7 +202,7 @@ fi
 cd \$(dirname \$0)
 command="proot"
 command+=" -0"
-command+=" -r $folder"
+command+=" -r *DIST*-fs/"
 if [ -n "\$(ls -A *DIST*-binds)" ]; then
 	for f in *DIST*-binds/* ;do
 		. \$f
