@@ -20,5 +20,23 @@ We use PRoot to be able to run any Linux distro on any Linux system without rein
 ## RootFS Images
 Check [here](https://github.com/Radialbog9/PRootify/blob/main/IMAGES.md) for the details on rootfs images, where they're stored, and how to build them.
 
+## Mirrors
+There is a simple mirrors system which allows you to use a different web server to download the installation files.
+
+To create a mirror, you need a web server. After you have a web server, there are 2 methods to mirror the files:
+
+### 1. Use the script
+```bash
+# make and change into the directory you want to be your mirror root
+sudo mkdir -p /var/www/html/prootify
+cd /var/www/html/prootify
+# run the script
+wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/make-mirror.sh | sudo bash
+```
+### 2. Mirror files manually
+Download all files from https://files.rb9.xyz/prootify/ and then upload them to your web server, replicating the same directory structure relative to `prootify/`.
+
+With both these options, your mirror url will be something like `http://example.com/prootify/` (if you ran the script/uploaded the files in a subdirectory called prootify).
+
 ## Credits
 [AnLinux](https://github.com/EXALAB/AnLinux-App/) was the starting point for this project, so thanks to them!
