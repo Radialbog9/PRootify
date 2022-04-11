@@ -5,6 +5,9 @@
 # File: prootify.sh              #
 # ############################## #
 
+defaultmirror=https://files.rb9.xyz/prootify/
+mirror=${PROOTIFY_MIRROR:-$defaultmirror}
+
 function exit_if_cancelled () {
 	if [ $? == 1 ]
 	then
@@ -57,50 +60,56 @@ case "$arch_reported" in
 		;;
 esac
 
+while true
+do
 # Get action
 action=$(whiptail --backtitle PRootify \
 	--menu "Select Action" 15 40 5 \
 	install "Install Distro" \
 	modify "Add/Remove Features" \
 	uninstall "Remove Distro" \
+	mirror "Change Mirror" \
 	3>&1 1>&2 2>&3)
 exit_if_cancelled
 
 # Get Distro
-if [ $arch == "i386" ];
+if [ $action != "mirror" ]; 
 then
-	# i386 distro list
-	distro=$(whiptail --backtitle PRootify \
-		--menu "Select Distro" 15 45 7 \
-		alpine-mini "Alpine" \
-		backbox "BackBox" \
-		centos "CentOS" \
-		debian "Debian" \
-		kali "Kali" \
-		nethunter "Kali Nethunter" \
-		parrot "Parrot" \
-		ubuntu "Ubuntu" \
-		void "Void" \
-		3>&1 1>&2 2>&3)
-	exit_if_cancelled
-else
-	# arm64, armhf, and amd64 distro list
-	distro=$(whiptail --backtitle PRootify \
-		--menu "Select Distro" 15 45 7 \
-		alpine-mini "Alpine" \
-		backbox "BackBox" \
-		centos "CentOS" \
-		debian "Debian" \
-		fedora "Fedora" \
-		kali "Kali" \
-		nethunter "Kali Nethunter" \
-		parrot "Parrot" \
-		ubuntu "Ubuntu" \
-		void "Void" \
-		opensuse-leap "openSUSE Leap" \
-		opensuse-tumbleweed "openSUSE Tumbleweed" \
-		3>&1 1>&2 2>&3)
-	exit_if_cancelled
+	if [ $arch == "i386" ];
+	then
+		# i386 distro list
+		distro=$(whiptail --backtitle PRootify \
+			--menu "Select Distro" 15 45 7 \
+			alpine-mini "Alpine" \
+			backbox "BackBox" \
+			centos "CentOS" \
+			debian "Debian" \
+			kali "Kali" \
+			nethunter "Kali Nethunter" \
+			parrot "Parrot" \
+			ubuntu "Ubuntu" \
+			void "Void" \
+			3>&1 1>&2 2>&3)
+		exit_if_cancelled
+	else
+		# arm64, armhf, and amd64 distro list
+		distro=$(whiptail --backtitle PRootify \
+			--menu "Select Distro" 15 45 7 \
+			alpine-mini "Alpine" \
+			backbox "BackBox" \
+			centos "CentOS" \
+			debian "Debian" \
+			fedora "Fedora" \
+			kali "Kali" \
+			nethunter "Kali Nethunter" \
+			parrot "Parrot" \
+			ubuntu "Ubuntu" \
+			void "Void" \
+			opensuse-leap "openSUSE Leap" \
+			opensuse-tumbleweed "openSUSE Tumbleweed" \
+			3>&1 1>&2 2>&3)
+		exit_if_cancelled
+	fi
 fi
 
 case $distro in
@@ -137,7 +146,7 @@ case $action in
 		exit_if_cancelled
 		# Start installation
 		echo "Downloading Archive..."
-		wget -O $dir/$distro-rootfs.tar.$archive_format "https://files.rb9.xyz/prootify/rootfs/$distro-rootfs-$arch.tar.$archive_format"
+		wget -O $dir/$distro-rootfs.tar.$archive_format "$mirror/rootfs/$distro-rootfs-$arch.tar.$archive_format"
 		currentdir=`pwd`
 		mkdir -p $dir/$distro-fs
 		# goto folder where rootfs is
@@ -240,9 +249,46 @@ fi
 		rm $dir/$distro-rootfs.tar.$archive_format
 		echo "Done!"
 		echo "Run $dir/start-$distro.sh to drop into your new distro!"
+		whiptail --backtitle PRootify --msgbox "Installation finished!" 15 40
+		;;
+	uninstall)
+		# Select where it was installed
+		dir=$(whiptail --backtitle PRootify \
+			--inputbox "Select Installation Directory (default = current user home directory)" 15 45 \
+			"$(realpath ~)" \
+			3>&1 1>&2 2>&3)
+		exit_if_cancelled
+		if ! [ -d "$dir/$distro-fs/" ];
+		then
+			echo "File system directory doesn't exist! Can't continue."
+			echo "If this system is somehow borked, manually remove the distro with this command:"
+			echo "rm -rfd $dir/start-$distro.sh $dir/$distro-{fs,binds}/"
+			exit 1
+		fi
+		echo "Installation directory: $dir"
+		confirm=$(whiptail --backtitle PRootify \
+			--yesno "Are you sure you want to remove directories for $distro ($dir/$distro-fs/, $dir/$distro-binds/, and $dir/start-$distro.sh)?" 15 40 \
+			3>&1 1>&2 2>&3)
+		exit_if_cancelled
+		echo "Removing files..."
+		rm -rfd $dir/start-$distro.sh $dir/$distro-{fs,binds}/
+		echo "Done!"
+		whiptail --backtitle PRootify --msgbox "Uninstallation finished!" 15 40
+		;;
+	mirror)
+		newmirror=$(whiptail --backtitle PRootify \
+			--inputbox "Type mirror here or leave blank/press cancel to keep current" 15 45 \
+			"$mirror" \
+			3>&1 1>&2 2>&3)
+		if [ ! -e $newmirror ];
+		then
+			# Mirror selected
+			mirror=$newmirror
+		fi
+		whiptail --backtitle PRootify --msgbox "Set mirror to $mirror." 15 40
 		;;
 	*)
 		whiptail --backtitle PRootify --msgbox "This feature hasn't been implemented yet." 15 40
-		exit 1
 		;;
 esac
+done

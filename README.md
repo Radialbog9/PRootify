@@ -18,32 +18,7 @@ From there, you can install and remove distros, and automatically add optional f
 We use PRoot to be able to run any Linux distro on any Linux system without reinstalls or virtualization.
 
 ## RootFS Images
-Some image files are bootstrapped manually, namely Debian-based distros (Ubuntu, Debian, Kali, Parrot, and Blackbox), as opposed to being downloaded from other sources.
-RootFS images are available [here](https://files.rb9.xyz/prootify/rootfs/), but if you need to build these manually, it's quite simple:
-```bash
-# Install dependencies first!
-sudo apt install wget qemu-user-static debian-archive-keyring debootstrap
-# Build all images
-wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-# Build all images but Parrot
-BUILD_INCLUDE_PARROT=false wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-# Build all Parrot Images
-BUILD_INCLUDE="parrot" wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-# Build amd64 Parrot image
-BUILD_INCLUDE="parrot:amd64" wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-# Build all images but Parrot images
-BUILD_INCLUDE_PARROT=false wget -qO - https://raw.githubusercontent.com/Radialbog9/PRootify/main/bootstrap-images.sh | sudo bash
-```
-
-If you get this error while building Parrot:
-```
-E: No such script: /usr/share/debootstrap/scripts/parrot-rolling
-```
-Then download the Parrot rolling script like this (this is a hacky solution and is by no means recommended):
-```bash
-sudo wget -O /usr/share/debootstrap/scripts/parrot-rolling https://raw.githubusercontent.com/ParrotSec/debootstrap/master/scripts/parrot-rolling
-sudo ln -sr /usr/share/debootstrap/scripts/parrot-rolling /usr/share/debootstrap/scripts/rolling
-```
+Check [here](https://github.com/Radialbog9/PRootify/blob/main/IMAGES.md) for the details on rootfs images, where they're stored, and how to build them.
 
 ## Credits
-[AnLinux](https://github.com/EXALAB/AnLinux-App/) as the starting point for this project, so thanks to them!
+[AnLinux](https://github.com/EXALAB/AnLinux-App/) was the starting point for this project, so thanks to them!
