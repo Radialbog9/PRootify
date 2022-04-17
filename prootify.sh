@@ -152,11 +152,13 @@ case $action in
 		# goto folder where rootfs is
 		cd "$dir/$distro-fs"
 		echo "Decompressing RootFS..."
+		if [ "$archive_format" == "gz" ]; then taroptions="xf"; fi
+		if [ "$archive_format" == "xz" ]; then taroptions="xJf"; fi
 		if [ "$is_termux" == "yes" ];
 		then
-			proot --link2symlink tar -xJf $dir/$distro-rootfs.tar.$archive_format
+			proot --link2symlink tar $taroptions $dir/$distro-rootfs.tar.$archive_format --exclude='dev'
 		else
-			proot tar -xJf $dir/$distro-rootfs.tar.$archive_format
+			proot tar $taroptions $dir/$distro-rootfs.tar.$archive_format --exclude='dev'
 		fi
 		rm -rfd dev/
 		echo "Setting up networking..."
